@@ -1,26 +1,27 @@
 
 export default function Sidebar(props) {
-    const noteElements = props.notes.map((note) => (
-        <div key={note.id}>
-            <div
-                
-                className={`title ${
-                    note.id === props.currentNote.id ? "selected-note" : ""
-                }`}
-                onClick={() => props.setCurrentNoteId(note.id)}
-            >
-                <h4 className="text-snippet">{note.body.split("\n")[0]}</h4>
-
-                <button 
-                    className="delete-btn"
-                    onClick={(event) => props.deleteNote(event, note.id)}
+    const noteElements = props.notes.map((note) => {
+        const noteBody = note.body.split("\n")[0]
+        const selectedNote = note.id === props.currentNote.id
+        return (
+            <div key={note.id}>
+                <div
+                    className={`title ${selectedNote ? "selected-note" : ""}`}
+                    onClick={() => props.setCurrentNoteId(note.id)}
                 >
-                    <i className="gg-trash trash-icon"></i>
-                </button>
+                    <h4 className="text-snippet">{noteBody ? noteBody : "Untitled Note"}</h4>
 
+                    <button 
+                        className="delete-btn"
+                        onClick={(event) => props.deleteNote(event, note.id)}
+                    >
+                        <i className={`gg-trash trash-icon ${selectedNote ? "trash-icon-color-light" : "trash-icon-color-dark"}`}></i>
+                    </button>
+
+                </div>
             </div>
-        </div>
-    ))
+        )}
+    )
 
     return (
         <section className="pane sidebar">
